@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+  <title>NishaDance — Free Trial</title>
+  <style>
+    :root{
+      --bg: #fff8f6;
+      --card: #ffffff;
+      --accent: #b91c1c;
+      --muted: #6b7280;
+      --input-h: 40px;
+      --font-base: 16px;
+    }
+    body {
+      margin:0;
+      padding:0;
+      background:var(--bg);
+      font-family: Arial, Helvetica, sans-serif;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      box-sizing:border-box;
+      font-size: var(--font-base);
+    }
+    .wrapper{
+      width:100%;
+      max-width:480px;
+      padding:16px;
+      box-sizing:border-box;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      box-sizing: border-box;
+    }
+    h1 { margin:0 0 12px; color:var(--accent); font-size:1.4rem; text-align:center; }
+    label { display:block; margin-top:12px; font-size:0.85rem; color:#374151; }
+    input, select, textarea {
+      width:100%;
+      padding:10px;
+      margin-top:6px;
+      border-radius:8px;
+      border:1px solid #e6e6e6;
+      box-sizing:border-box;
+      font-size:1rem;
+      height:var(--input-h);
+    }
+    textarea { height:70px; resize:none; }
+    .row { display:flex; gap:10px; }
+    .row > div { flex:1; min-width:0; }
+    .btn {
+      width:100%;
+      padding:12px;
+      margin-top:20px;
+      border-radius:10px;
+      background:linear-gradient(90deg,#ef4444,#fb923c);
+      color:white;
+      font-weight:700;
+      font-size:1.1rem;
+      cursor:pointer;
+      border:0;
+      height:48px;
+    }
+    .note { margin-top:10px; font-size:0.9rem; color:var(--muted); text-align:center; }
+    @media (max-width:480px) {
+      :root { --font-base: 15px; }
+      .row { flex-direction:column; gap:8px; }
+      .card { padding: 14px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <h1>Book a Free Trial</h1>
+      <form id="waForm" autocomplete="off" action="javascript:void(0);">
+        <div class="row">
+          <div>
+            <label for="name">Full name</label>
+            <input id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" placeholder="9458xxxxx" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="classType">Preferred Class</label>
+            <select id="classType" name="classType">
+              <option>Beginner Kathak</option>
+              <option>Intermediate Kathak</option>
+              <option>Advanced / Stage</option>
+              <option>Choreography</option>
+              <option>Semi Classical</option>
+              <option>Online Coaching</option>
+            </select>
+          </div>
+          <div>
+            <label for="when">Preferred Time</label>
+            <input id="when" name="when" placeholder="e.g. Mon/Wed — 6pm" />
+          </div>
+        </div>
+
+        <label for="message">Message (optional)</label>
+        <textarea id="message" name="message" placeholder="Any additional details"></textarea>
+
+        <button class="btn" type="submit">Send via WhatsApp</button>
+        <div class="note" id="note"></div>
+      </form>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const WA = "919458900035";
+  const note = document.getElementById('note');
+  document.getElementById('waForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const classType = document.getElementById('classType').value.trim();
+    const when = document.getElementById('when').value.trim();
+    const message = document.getElementById('message').value.trim();
+    if(!name || !phone){
+      note.textContent = "Please enter name and phone.";
+      return;
+    }
+    const lines = [
+      "Hello NishaDanceclasses — I would like to book a free trial.",
+      "Name: " + name,
+      "Phone: " + phone,
+      "Class: " + classType,
+      "Preferred time: " + when
+    ];
+    if(message) lines.push("Message: " + message);
+    const text = encodeURIComponent(lines.join("\n"));
+    const url = "https://wa.me/" + WA + "?text=" + text;
+    window.open(url, "_blank");
+  });
+})();
+</script>
+
+</body>
+</html>
